@@ -1,0 +1,7 @@
+<%= form_for @lead do |f| %>
+
+  <%= f.label :email, "Sign up to receive more information!" %>
+  <%= f.email_field :email, placeholder: "you@example.com" %>
+  <%= f.submit "Submit" %>
+
+<% end %>

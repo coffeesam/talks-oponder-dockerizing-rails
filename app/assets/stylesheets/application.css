@@ -1,0 +1,73 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+html {
+  background: url(/assets/singapore.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  font-family: roboto;
+  color: #131623;
+}
+
+h1 {
+  margin-top: 5px;
+}
+
+.alert {
+  width: 300px;
+  margin: auto;
+  margin-top: 40px;
+  margin-bottom: -50px;
+  background-color: #fff;
+  border: 1px solid #38C05C;
+  padding: 5px 10px;
+  text-align: center;
+}
+
+#wrapper {
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+  text-align: center;
+  background-color: #EFDCD0;
+
+  box-shadow: 0px 10px 100px #426FA1;
+  padding: 10px 20px;
+  border-radius: 4px;
+}
+
+input {
+  border: 0px;
+  padding: 10px;
+  display: block;
+  margin-top: 10px;
+}
+
+input[type='email'] {
+  width: 280px;
+}
+
+input[type="submit"] {
+  background-color: #2FC257;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 4px;
+  margin: auto;
+  margin-top: 10px;
+}

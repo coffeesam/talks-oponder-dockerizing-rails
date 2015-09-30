@@ -1,0 +1,8 @@
+#!/usr/bin/ruby
+
+`docker-compose run weba rails runner "Lead.destroy_all"`
+
+100.times do |i|
+  `curl --form "lead[email]=test@lead.com" http://local.docker/leads`
+  sleep 1
+end

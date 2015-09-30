@@ -1,0 +1,52 @@
+#!/bin/bash
+
+trap 'excode=$?; cleanup; echo $excode; exit' EXIT HUP INT QUIT PIPE TERM
+
+cleanup() {
+  kill $(cat /server.pid)
+  redis-cli -h frontend lrem frontend:$DOMAIN 1 http://$IP:3000
+}
+
+wait_till_port_is_open() {
+  echo "Waiting for $1 to launch..."
+
+  while ! nc -z $1 $2; do
+    sleep 0.1 # wait for 1/10 of the second before check again
+  done
+
+  echo "$1 UP!"
+}
+
+create_frontend_identifier() {
+  FRONTEND="$(redis-cli -h frontend exists frontend:$DOMAIN)"
+
+  if [[ $FRONTEND == "0" ]]; then
+    echo 'Frontend identifier doesnt exist. Creating'
+    redis-cli -h frontend rpush frontend:$DOMAIN dockerdev
+  else
+    echo 'The frontend identifier already exists. Skipping.'
+  fi
+}
+
+create_frontend_entry() {
+  IP=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
+  redis-cli -h frontend rpush frontend:$DOMAIN http://$IP:3000
+}
+
+main() {
+  wait_till_port_is_open frontend 6379
+  wait_till_port_is_open db 3306
+  create_frontend_identifier
+
+  rake db:create db:migrate RAILS_ENV=production
+
+  rails server -e production --port 3000 --binding 0.0.0.0 --pid /server.pid &
+
+  wait_till_port_is_open localhost 3000
+
+  create_frontend_entry
+}
+
+main
+
+wait $1

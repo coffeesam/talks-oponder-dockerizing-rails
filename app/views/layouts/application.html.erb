@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RailsDocker</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <% [:notice, :error, :alert].each do |level| %>
+    <% unless flash[level].blank? %>
+      <div class="alert <%= flash_class(level) %>">
+        <%= content_tag :p, flash[level] %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <div id="wrapper">
+    <h1>A cool event!</h1>
+    <%= yield %>
+  </div>
+</body>
+</html>
